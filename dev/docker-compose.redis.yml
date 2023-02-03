@@ -1,0 +1,9 @@
+services:
+  redis:
+    image: redis
+    env_file:
+      - ../.env
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD-strongpass}
+    ports:
+      - ${REDIS_PORT-6379}:6379
