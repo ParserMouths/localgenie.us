@@ -1,0 +1,61 @@
+#!/usr/bin/env just --justfile
+
+GO := "go"
+
+GOVET_COMMAND := GO + " vet"
+GOTEST_COMMAND := GO + " test"
+GOCOVER_COMMAND := GO + " tool cover"
+GOBUILD_COMMAND := GO + " build"
+COVTHRESHOLD := "50"
+
+
+# display all commands
+default:
+    @just --list --unsorted
+
+# Run static checks
+check:
+    {{GOVET_COMMAND}} ./...
+
+# Execute test cases with code coverage
+test:
+    {{GOTEST_COMMAND}} -v -race -covermode=atomic -coverprofile=coverage.out ./...
+    {{GOCOVER_COMMAND}} -func=coverage.out
+    {{GOCOVER_COMMAND}} -html=coverage.out -o coverage.html
+    COVERAGE=$$(go tool cover -func=coverage.out | grep "^total:" | grep -o "[0-9\.]*");
+    echo "$$COVERAGE {{COVTHRESHOLD}}" | awk '{if (!($$1 >= $$2)) { print "Coverage below threshold - Coverage: " $$1 "%" ", Expected threshold: " $$2 "%"; exit 1 } else { print "Coverage above threshold - Coverage: " $$1 "%" ", Expected threshold: " $$2 "%"; } }'
+
+# Clean dist directory and rebuild the binary file
+build:
+    rm -rf ./dist && CGO_ENABLED=0 {{GOBUILD_COMMAND}} -ldflags="-w -s" -o ./dist/app ./src
+
+update:
+  go get -u
+  go mod tidy -v
+
+
+# Build proto files
+proto:
+    cd src/delivery/grpc && (protoc --proto_path=./proto/ ./proto/*.proto --go_out=./ --go-grpc_out=./ --go-grpc_opt=require_unimplemented_servers=false && cd ../../..) || (cd ../../.. && exit 1)
+
+setup-mongo-local:
+    docker-compose -f dev/docker-compose.mongo.yml up -d
+
+setup-redis-local:
+    docker-compose -f dev/docker-compose.redis.yml up -d
+
+setup-postgres-local:
+    docker-compose -f dev/docker-compose.postgres.yml up -d
+
+setup-kafka-benthos-local:
+    docker-compose -f dev/docker-compose.kafka-benthos.yml up -d
+
+setup-grafana-local:
+    docker-compose -f dev/docker-compose.prometheus-grafana.yml up -d
+
+run: setup-redis-local setup-postgres-local
+    air
+
+run-with-metrics: setup-mongo-local setup-redis-local setup-kafka-benthos-local setup-grafana-local
+    air
+
