@@ -1,0 +1,36 @@
+services:
+  web:
+    build:
+      dockerfile: ./backend/Dockerfile
+      context: .
+    env_file: ./backend/.env
+    environment:
+      - DGN=dev
+      - PG_DB_URI=postgresql://test:test@postgres/test
+    ports:
+      - ${EXPORT_PORT-6969}:6969
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=test
+      - PGUSER=test
+      - POSTGRES_PASSWORD=test
+    ports:
+      - ${DB_PORT-5432}:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+
+volumes:
+  postgres_data:
