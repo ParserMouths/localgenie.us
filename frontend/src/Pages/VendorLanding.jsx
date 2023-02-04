@@ -6,6 +6,7 @@ import Mybutton from "../Components/Button.jsx";
 import { withRouter, useLocation } from "react-router-dom";
 import { getStore } from "../utils/storyblok.js";
 import Loader from "../Components/Loader";
+import Tag from "../Components/Tag";
 
 const dummyData = {
   imgs: [
@@ -35,6 +36,7 @@ function VendorLanding(props) {
       console.log("data", data);
       if (data) setData(data);
       setLoading(false);
+      // data["IsOpen"] = 0;
       console.log(data);
     })();
   }, []);
@@ -71,6 +73,14 @@ function VendorLanding(props) {
                 </Mybutton>
                 <Mybutton className="btn-x"> Pay Merchant </Mybutton>
               </div>
+
+              <Tag
+                title={
+                  data?.["IsOpen"] === 1
+                    ? "Open"
+                    : "Last Active : " + data?.["LastActive"]?.split(" ")[0]
+                }
+              />
 
               <h3>Offering</h3>
               <p>{data["Offering"]}</p>
