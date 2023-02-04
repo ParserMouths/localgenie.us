@@ -135,7 +135,7 @@ export default function SignUp(props) {
             Already registered?
             <span>
               {/*put router link here*/}
-              <Link to="/login" style={{ "text-decoration": "none" }}>
+              <Link to="/login" style={{ textDecoration: "none" }}>
                 Sign In
               </Link>
             </span>

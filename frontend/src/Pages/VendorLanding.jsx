@@ -41,6 +41,7 @@ function VendorLanding(props) {
 
   return (
     <div className={props.className}>
+      {loading && <Loader />}
       <div className="vendor-landing-page">
         <Mybutton className="back-btn" onClick={props.history.goBack}>
           <i className="far fa-arrow-left"></i> &nbsp; Back{" "}
@@ -60,9 +61,7 @@ function VendorLanding(props) {
         </div>
         <div className="vendor-content">
           <hr />
-          {loading ? (
-            <Loader />
-          ) : (
+          {!loading && (
             <>
               <h2>{data["StallName"]}</h2>
               <div className="btns">
