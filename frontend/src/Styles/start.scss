@@ -1,0 +1,28 @@
+@import "../utils/variables";
+
+.card-start {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: wrap;
+  width: 100vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  .card-head {
+    text-align: center;
+    padding: 8px;
+  }
+  .card-button {
+    width: 100vw;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .btn-vendor-client {
+    width: 100%;
+  }
+}

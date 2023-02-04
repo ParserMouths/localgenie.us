@@ -4,6 +4,8 @@ import Home from "./Pages/Home.jsx";
 import Results from "./Pages/Results.jsx";
 import VendorLanding from "./Pages/VendorLanding.jsx";
 import VendorHome from "./Pages/VendorHome.jsx";
+import SignUp from "./Pages/SignUp.jsx";
+import CreateStore from "./Pages/CreateStore.jsx";
 import { useAuth } from "./hooks/useAuth.js";
 
 import { TransitionGroup, CSSTransition } from "react-transition-group";
@@ -18,6 +20,8 @@ import {
 } from "react-router-dom";
 
 import "./App.scss";
+import Login from "./Pages/Login.jsx";
+import Start from "./Pages/Start.jsx";
 import RequireAuth from "./Components/RequireAuth.jsx";
 // import { RequireAuth } from "./Components/RequireAuth.jsx";
 //<FeaturedCard img={require('./Assets/fruits.png')} title="Fruits" description="juicy asf" />
@@ -59,6 +63,12 @@ function App() {
             <Route path="/user/results/:searchQuery" children={<Results />} />
             <Route path="/vendor/home" children={<VendorHome />} />
             {/* </Route> */}
+            <Route path="/signup" children={<SignUp />} />
+            <Route path="/login" children={<Login />} />
+            <Route
+              path="/createStore"
+              children={<RequireAuth children={<CreateStore />} />}
+            />
           </Switch>
         </CSSTransition>
       </TransitionGroup>
@@ -66,4 +76,7 @@ function App() {
     </div>
   );
 }
+//<Route path="/user/home" children={<Home className='home'/>} />
+//<Route path="/user/results" children={<Results />} />
+//<Route path="/vendor/home" children={<VendorLanding />} />
 export default App;
