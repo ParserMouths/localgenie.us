@@ -1,0 +1,37 @@
+@import "../utils/variables";
+
+.form-wrapper {
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80vh;
+  margin: 2rem;
+  border-radius: 20px;
+  h1 {
+    color: $primary;
+  }
+  .form {
+    padding: 1rem;
+    input,
+    textarea {
+      padding: 0.5rem;
+      border: solid $tertiary 2px;
+      border-radius: 10px;
+      margin-bottom: 0.1rem;
+      width: 70vw;
+    }
+    input {
+      margin-bottom: 0.5rem;
+    }
+    button {
+      padding: 0.5rem;
+      margin-bottom: 0.1rem;
+      width: 70vw;
+    }
+    .form-input {
+      padding-bottom: 1rem;
+    }
+  }
+}
