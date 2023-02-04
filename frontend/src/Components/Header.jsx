@@ -22,7 +22,12 @@ export default function Header(props){
 	return (
 		<div className={props.className}>
 			<div className='header-wrapper'>
-			  	<Logo style = {{margin:'0.5rem'}}/>
+			  	<Logo     
+					style = {{
+						  margin: "0.5rem",
+						  height: "2rem",
+						  width: "min-content", 
+						}}/>
 				<span className='locator' onClick={updateLocation}>{city}<i className="far fa-location" style={{marginLeft:'5px'}}></i></span>
 			</div>
 		</div>
