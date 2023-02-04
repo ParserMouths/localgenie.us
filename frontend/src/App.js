@@ -23,6 +23,8 @@ import "./App.scss";
 import Login from "./Pages/Login.jsx";
 import Start from "./Pages/Start.jsx";
 import RequireAuth from "./Components/RequireAuth.jsx";
+import Profile from "./Pages/Profile.jsx";
+import Logout from "./Pages/Logout.jsx";
 // import { RequireAuth } from "./Components/RequireAuth.jsx";
 //<FeaturedCard img={require('./Assets/fruits.png')} title="Fruits" description="juicy asf" />
 //<VendorCard img={require('./Assets/vendor-1.png')} title="Gavin Belson's Sandwich" description="After working in tech, i finally decided to sell the sandwiches."/>
@@ -69,6 +71,14 @@ function App() {
             <Route
               path="/createStore"
               children={<RequireAuth children={<CreateStore />} />}
+            />
+            <Route
+              path="/profile"
+              children={<RequireAuth children={<Profile />} />}
+            />
+            <Route
+              path="/logout"
+              children={<RequireAuth children={<Logout />} />}
             />
           </Switch>
         </CSSTransition>

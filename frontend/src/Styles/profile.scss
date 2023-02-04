@@ -1,0 +1,52 @@
+@import "../utils/variables";
+
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+.profile-card {
+  background: white;
+  position: relative;
+  border-radius: 0.5rem;
+  height: 7.5rem;
+  //width: 90vw;
+  display: flex;
+  flex-direction: row;
+  box-shadow: inset 0px 0px 0px 2px #f0f0f0;
+  transition: all ease-in-out 0.25s;
+  //border: None;
+
+  img {
+    height: 7.5rem;
+    width: 7.5rem;
+    object-fit: cover;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
+
+  .title-description {
+    margin: 0.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    h3 {
+      color: $primary;
+      line-height: 130%;
+    }
+  }
+}
+.profile-btn {
+  text-align: center;
+  margin: 2rem;
+  width: 100%;
+  button {
+    width: 90%;
+  }
+}

@@ -9,6 +9,7 @@ import SliderButton from "../Components/SliderButton.jsx";
 import axios from "../utils/axios/axios.js";
 import Loader from "../Components/Loader.jsx";
 import authHeader from "../utils/axios/auth-header.js";
+import Tag from "../Components/Tag.jsx";
 
 const dummyData = {
   imgs: [
@@ -106,6 +107,7 @@ export default function VendorHome(props) {
             <SliderButton sliderHandler={sliderHandler} />
             <h3>Open</h3>
           </div>
+          {/* <Tag title={}/> */}
           <h3>Offering</h3>
           <p className={editing ? "edit" : ""} contentEditable={editing}>
             {dummyData["description"]}
