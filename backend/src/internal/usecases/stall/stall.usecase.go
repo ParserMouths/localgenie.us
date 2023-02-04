@@ -35,7 +35,7 @@ func NewStallUsecase(config *utils.Config, db *gorm.DB, stallRepo domain_stall.R
 	}
 }
 
-func (handler *stallUsecase) CreateStall(ctx context.Context, reqStall domain_stall.Stall, assetArr []string) (domain_stall.Stall, error) {
+func (handler *stallUsecase) CreateStall(ctx context.Context, reqStall domain_stall.Stall, assetArr []string) (string, error) {
 	stallID := uuid.New().String()
 	timeStr := time.Now().String()
 
@@ -57,7 +57,7 @@ func (handler *stallUsecase) CreateStall(ctx context.Context, reqStall domain_st
 	longFloat, err := strconv.ParseFloat(newStall.Longitude, 32)
 	if err != nil {
 		fmt.Println(err)
-		return domain_stall.Stall{}, err
+		return "", err
 	}
 
 	newStory := &domain_storyblok.StoryPayload{
@@ -89,7 +89,7 @@ func (handler *stallUsecase) CreateStall(ctx context.Context, reqStall domain_st
 	newStall.StoryID = storyID
 	handler.stallRepo.CreateStall(ctx, *newStall)
 	// also manage creating stall in storyblok using management API
-	return *newStall, nil
+	return stallID, nil
 }
 
 func (handler *stallUsecase) UpdateStall(ctx context.Context, stallID string, reqStall domain_stall.StallUpdate) (domain_stall.Stall, error) {
@@ -152,8 +152,10 @@ func (handler *stallUsecase) UpdateStall(ctx context.Context, stallID string, re
 		newStoryContent.Latitude = float32(latFloat)
 		newStoryContent.Longitude = float32(longFloat)
 	}
+
 	if newStall.IsOpen == 1 {
 		usersNearby, _ := handler.stallRepo.GetUsersAroundStall(ctx, float32(latFloat), float32(longFloat))
+		fmt.Println("[USERSS]", usersNearby)
 		for _, user := range usersNearby {
 			go func(user domain_user.User) {
 				notif.SendNotif(handler.config, user.Subscription, "Your favourite stall is open.", fmt.Sprintf("%s is open now.", stall.StallName))

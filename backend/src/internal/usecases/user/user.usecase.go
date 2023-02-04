@@ -77,7 +77,7 @@ func (handler *userUsecase) VerifyUser(ctx context.Context, loginUser domain_use
 }
 
 func (handler *userUsecase) GenerateAuthToken(ctx context.Context, loginUser domain_user.LoginUser) (string, error) {
-	expirationTime := time.Now().Add(60 * time.Minute)
+	expirationTime := time.Now().Add(60 * 60 * time.Minute)
 	claim := &Claims{
 		Username: loginUser.Username,
 		RegisteredClaims: jwt.RegisteredClaims{

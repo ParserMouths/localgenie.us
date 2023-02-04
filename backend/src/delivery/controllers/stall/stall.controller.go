@@ -95,14 +95,14 @@ func (c *controller) CreateStall(fiberHandler *fiber.Ctx) (err error) {
 		AboutVendor: aboutVendor[0],
 	}
 
-	_, err = c.stall.CreateStall(fiberHandler.Context(), *reqBody, assetArr)
+	sll, err := c.stall.CreateStall(fiberHandler.Context(), *reqBody, assetArr)
 	if err != nil {
 		fmt.Println(err)
 		return fiberHandler.JSON(fiber.Map{
 			"err": "error create story",
 		})
 	}
-	return fiberHandler.JSON(fiber.Map{"test": "test"})
+	return fiberHandler.JSON(fiber.Map{"stall_id": sll})
 }
 
 func (c *controller) CreateReview(fiberHandler *fiber.Ctx) (err error) {

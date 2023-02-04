@@ -44,7 +44,7 @@ type Repository interface {
 }
 
 type Usecase interface {
-	CreateStall(ctx context.Context, reqBody Stall, assetArr []string) (Stall, error)
+	CreateStall(ctx context.Context, reqBody Stall, assetArr []string) (string, error)
 	CreateStallReview(ctx context.Context, reviewBody Review) error
 	UpdateStall(ctx context.Context, stallID string, reqStall StallUpdate) (Stall, error)
 }
