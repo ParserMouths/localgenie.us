@@ -2,6 +2,7 @@ package controller_user
 
 import (
 	"encoding/json"
+	"fmt"
 	domain_user "htf/src/internal/domain/user"
 	"htf/src/utils"
 	"time"
@@ -34,6 +35,9 @@ func (c *controller) UserTest(fiberHandler *fiber.Ctx) (err error) {
 
 func (c *controller) UserSignIn(fiberHandler *fiber.Ctx) (err error) {
 	// get credentials
+	var loginUser domain_user.LoginUser
+	json.Unmarshal(fiberHandler.Body(), &loginUser)
+	fmt.Println(loginUser)
 	// check if password is same
 	expirationTime := time.Now().Add(5 * time.Minute)
 	claim := &Claims{
@@ -50,7 +54,9 @@ func (c *controller) UserSignIn(fiberHandler *fiber.Ctx) (err error) {
 		fiberHandler.SendString("Cannot")
 		return
 	}
-	return fiberHandler.SendString(tokenString)
+	return fiberHandler.JSON(fiber.Map{
+		"token": tokenString,
+	})
 }
 
 func (c *controller) UserSignUp(fiberHandler *fiber.Ctx) (err error) {
