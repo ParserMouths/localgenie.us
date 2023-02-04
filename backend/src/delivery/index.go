@@ -3,7 +3,8 @@ package delivery
 import (
 	"context"
 	"fmt"
-	"htf/src/delivery/controllers"
+	controller_notification "htf/src/delivery/controllers/notification"
+	controller_user "htf/src/delivery/controllers/user"
 	"htf/src/delivery/routers"
 	"htf/src/internal/usecases"
 	"htf/src/utils"
@@ -14,9 +15,11 @@ import (
 func NewRestDelivery(ctx context.Context, config *utils.Config, useCases usecases.UseCases) {
 	app := fiber.New()
 
-	userController := controllers.NewUserController(config, useCases.User)
+	userController := controller_user.NewUserController(config, useCases.User)
+	notificationController := controller_notification.NewNotificationController(config, useCases.Notification)
 
 	routers.SetUserRoutes(app, userController)
+	routers.SetNotificationRoutes(app, notificationController)
 
 	err := app.Listen(fmt.Sprintf(":%d", config.ServerPort))
 
