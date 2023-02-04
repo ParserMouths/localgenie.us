@@ -17,5 +17,5 @@ type Repository interface {
 
 type Usecase interface {
 	CreateNewSubscription(ctx context.Context, reqBody Subscription) error
-	SendNotificationUsecase(ctx context.Context, reqBody PushPayload) error
+	SendNotificationUsecase(ctx context.Context, subscription string) error
 }

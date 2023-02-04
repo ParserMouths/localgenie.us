@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"path"
@@ -21,6 +20,7 @@ type Config struct {
 	NotificationPublicKey string
 	SpaceID               string
 	ProjectRoot           string
+	NotifPrivateKey       string
 }
 
 func NewConfig() *Config {
@@ -43,6 +43,7 @@ func NewConfig() *Config {
 		NotificationPublicKey: "BMLTD4SXRjPwfFAWZCOcv9_IyWoMGr1FX1SLTgtMdTLkh5NJu6qODaju484eyptfd1m7IZl037nDQMXPcfMpRUE",
 		SpaceID:               "195405",
 		ProjectRoot:           filepath.Dir(d),
+		NotifPrivateKey:       "",
 	}
 
 	envConfigVars := [...]string{
@@ -51,10 +52,10 @@ func NewConfig() *Config {
 		"REDIS_CLUSTER_HOST",
 		"JWT_SECRET",
 		"STORYBLOK_OAUTH",
+		"NOTIF_PRIVATE_KEY",
 	}
 
 	for _, env := range envConfigVars {
-		fmt.Println(env)
 		if os.Getenv(env) != "" {
 			switch env {
 			case "SERVER_PORT":
@@ -67,6 +68,8 @@ func NewConfig() *Config {
 				config.JwtSecret = os.Getenv(env)
 			case "STORYBLOK_OAUTH":
 				config.StoryBlokOAuth = os.Getenv(env)
+			case "NOTIF_PRIVATE_KEY":
+				config.NotifPrivateKey = os.Getenv(env)
 			}
 		}
 	}

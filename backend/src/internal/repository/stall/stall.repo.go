@@ -59,7 +59,7 @@ func (repo *StallRepository) GetStallFromStallID(ctx context.Context, stallID st
 
 func (repo *StallRepository) GetUsersAroundStall(ctx context.Context, latitude float32, longitude float32) ([]domain_user.User, error) {
 	var users []domain_user.User
-	result := repo.db.Table("users").Where("latitude BETWEEN ? AND ?", latitude-0.01, latitude+0.01).Where("longitude BETWEEN ? AND ?", longitude-0.01, longitude+0.01).Find(&users)
+	result := repo.db.Table("users").Where("latitude LIKE '23.20%'").Where("longitude LIKE '72.58%'").Find(&users)
 	if result.Error != nil {
 		return []domain_user.User{}, result.Error
 	}

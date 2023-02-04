@@ -22,7 +22,7 @@ type UseCases struct {
 func InitUseCases(config *utils.Config, db *gorm.DB, repos repositories.Repositories) *UseCases {
 	userUseCase := usecase_user.NewUserUsecase(config, db, repos.UserRepo)
 	notificationUseCase := usecase_notification.NewNotificationUsecase(config, db, repos.NotificationRepo)
-	stallUseCase := usecase_stall.NewStallUsecase(config, db, repos.StallRepo)
+	stallUseCase := usecase_stall.NewStallUsecase(config, db, repos.StallRepo, notificationUseCase)
 	return &UseCases{
 		User:         userUseCase,
 		Notification: notificationUseCase,

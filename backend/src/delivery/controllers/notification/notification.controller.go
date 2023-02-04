@@ -38,7 +38,7 @@ func (c *controller) SendNotification(fiberHandler *fiber.Ctx) error {
 	var reqBody domain_notification.PushPayload
 	json.Unmarshal(fiberHandler.Body(), &reqBody)
 
-	err := c.notification.SendNotificationUsecase(fiberHandler.Context(), reqBody)
+	err := c.notification.SendNotificationUsecase(fiberHandler.Context(), "")
 	if err != nil {
 		fiberHandler.JSON(fiber.Map{
 			"message": "error",

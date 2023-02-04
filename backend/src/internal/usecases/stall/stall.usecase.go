@@ -4,9 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	domain_notification "htf/src/internal/domain/notification"
 	domain_stall "htf/src/internal/domain/stall"
 	domain_storyblok "htf/src/internal/domain/storyblok"
+	domain_user "htf/src/internal/domain/user"
 	"htf/src/utils"
+	notif "htf/src/utils/notification"
 	"htf/src/utils/storyblok"
 	"strconv"
 	"time"
@@ -16,12 +19,13 @@ import (
 )
 
 type stallUsecase struct {
-	config    *utils.Config
-	db        *gorm.DB
-	stallRepo domain_stall.Repository
+	config              *utils.Config
+	db                  *gorm.DB
+	stallRepo           domain_stall.Repository
+	notificationUsecase domain_notification.Usecase
 }
 
-func NewStallUsecase(config *utils.Config, db *gorm.DB, stallRepo domain_stall.Repository) *stallUsecase {
+func NewStallUsecase(config *utils.Config, db *gorm.DB, stallRepo domain_stall.Repository, notifUsecase domain_notification.Usecase) *stallUsecase {
 	return &stallUsecase{
 		config:    config,
 		db:        db,
@@ -119,7 +123,11 @@ func (handler *stallUsecase) UpdateStall(ctx context.Context, stallID string, re
 	}
 	if newStall.IsOpen == 1 {
 		usersNearby, _ := handler.stallRepo.GetUsersAroundStall(ctx, float32(latFloat), float32(longFloat))
-		fmt.Println(usersNearby)
+		for _, user := range usersNearby {
+			go func(user domain_user.User) {
+				notif.SendNotif(handler.config, user.Subscription, "Your favourite stall is open.", fmt.Sprintf("%s is open now.", stall.StallName))
+			}(user)
+		}
 	}
 	if err != nil {
 		fmt.Println(err)
