@@ -3,10 +3,10 @@ import "../Styles/sliderbutton.scss";
 
 export default function SliderButton({ sliderHandler }) {
   return (
-    <div class="toggle">
-      <label class="switch">
+    <div className="toggle">
+      <label className="switch">
         <input type="checkbox" onChange={sliderHandler} />
-        <span class="slider round"></span>
+        <span className="slider round"></span>
       </label>
     </div>
   );

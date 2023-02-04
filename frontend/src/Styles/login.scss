@@ -2,13 +2,14 @@
 
 .form-wrapper {
   text-align: center;
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 80vh;
-  margin: 2rem;
-  border-radius: 20px;
+  height: 100vh;
+  margin: 0;
+  z-index: 6;
+  background: white;
   h1 {
     color: $primary;
   }

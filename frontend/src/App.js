@@ -49,6 +49,7 @@ import RequireAuth from "./Components/RequireAuth.jsx";
 // });
 function App() {
   let location = useLocation();
+  console.log(location);
   const userId = localStorage.getItem("userId");
   return (
     <div className="App">
@@ -72,7 +73,9 @@ function App() {
           </Switch>
         </CSSTransition>
       </TransitionGroup>
-      {userId && <NavBar className="navbar" />}
+      {(location?.pathname.includes("/user") ||
+        location?.pathname.includes("/vendor")) &&
+        userId && <NavBar className="navbar" />}
     </div>
   );
 }

@@ -17,7 +17,7 @@ const Start = () => {
   return (
     <div className="card-start">
       <div className="card-head">
-        <Logo style={{ margin: "0.5rem" }} />
+        <Logo />
         <h3> Are You a Vendor or Customer? </h3>
       </div>
       <div className="card-button">

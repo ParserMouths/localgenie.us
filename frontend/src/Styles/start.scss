@@ -11,6 +11,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  position: absolute;
+  height: 100vh;
+  justify-content: center;
+  z-index: 6;
+  background: white;
   .card-head {
     text-align: center;
     padding: 8px;
