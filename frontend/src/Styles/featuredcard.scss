@@ -1,0 +1,25 @@
+@import "../utils/variables";
+
+.wrapper {
+	background: white;
+    position: relative;
+    width: 11rem;
+    padding: 1rem;
+    border: solid #f0f0f0 2px;
+    border-radius: 0.5rem;
+    //margin: 1rem;
+
+	img {
+		position: absolute;
+		top: 0rem;
+		right: 0rem;
+		height: 4rem;
+	}
+	h3 {
+		color: $primary;
+	}
+	p {
+		color: $mygrey;
+		font-size: 0.75rem;
+	}
+}

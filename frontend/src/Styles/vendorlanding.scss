@@ -1,0 +1,66 @@
+@import "../utils/variables";
+
+.vendor-landing-page {
+
+	height: 100vh;
+	width: 100vw;
+	perspective: 10px;
+	overflow-y: auto;
+
+	.back-btn {
+		position: fixed;
+		top: 0;
+		left: 0;
+		margin: 1rem;
+		height: 2rem;
+	}
+	
+	.carousel-wrapper {
+		position: sticky;
+		top: 0;
+		z-index: -1;
+		max-height: 90vh;
+		.carousel-root {
+			.control-dots {
+				margin: 30px 0;
+			}
+		}
+	}
+
+	.vendor-content {
+		position: relative;
+		background: white;
+		padding: 1rem;
+		z-index: 1;
+		margin-top: -20px;
+		border-radius: 20px;
+		hr {
+			border-radius: 10px;
+			height: 3px;
+			background: #6d6e6e47;
+			border: none;
+			width: 2.5rem;
+			margin: auto auto 0.5rem;
+		}
+		.btns {
+			margin: 0.5rem 0;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			.btn-x {
+				width: calc(50% - 0.25rem);
+			}
+		}
+		h2, h3{
+			padding: 0.5rem 0 0;
+			color: $primary;
+		}
+		p {
+			padding: 0 0 0.5rem;
+		}
+	}
+}
+
+
+
+

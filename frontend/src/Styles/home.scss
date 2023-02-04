@@ -1,0 +1,46 @@
+
+.header {
+	position:sticky;
+	top:0;
+	width: 100vw;
+	z-index: 3;
+}
+.search-bar {
+	margin: 1rem 1rem 0;
+}
+.featured {
+	margin: 1rem;
+}
+.vendor-list{
+	margin: 1rem;
+}
+.vendor-landing-home {
+	background: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+	//height: 50vh;
+	//overflow: hidden;
+	right: 0;
+	bottom: 0;
+	z-index: 3;
+}
+
+.slide-enter {
+  transform: translateX(500px);
+}
+
+.slide-enter-active {
+  transform: translateX(0);
+  transition: all 300ms;
+}
+
+.slide-exit {
+  transform: translateX(0);
+}
+
+.slide-exit-active {
+  transform: translateX(500px);
+  transition: all 300ms;
+}
+

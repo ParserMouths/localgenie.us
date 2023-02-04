@@ -1,0 +1,16 @@
+@import "https://unpkg.com/leaflet@1.5.1/dist/leaflet.css";
+@import "../utils/variables";
+
+.map-container {
+	height: 100vh;
+	width:	100vw;
+	z-index: 0;
+	overflow: hidden;
+}
+
+.results-list{
+	width: 100%;
+	position: fixed;
+	bottom: 5.5rem;
+	left: 0;
+}
