@@ -1,19 +1,19 @@
 package domain_storyblok
 
 type StoryContent struct {
-	Component   string `json:"component"`
-	StallID     string
-	OwnerID     string
-	StallName   string
-	IsOpen      int
-	CreatedAt   string
-	Rating      string
-	Offering    string
-	AboutVendor string
-	LastActive  string
-	Latitude    float32
-	Longitude   float32
-	Assets      []string
+	Component   string   `json:"component"`
+	StallID     string   `json:"stall_id"`
+	OwnerID     string   `json:"owner_id"`
+	StallName   string   `json:"stall_name"`
+	IsOpen      int      `json:"is_open"`
+	CreatedAt   string   `json:"created_at"`
+	Rating      string   `json:"rating"`
+	Offering    string   `json:"offering"`
+	AboutVendor string   `json:"about_vendor"`
+	LastActive  string   `json:"last_active"`
+	Latitude    float32  `json:"latitude"`
+	Longitude   float32  `json:"longitude"`
+	Assets      []string `json:"assets"`
 }
 
 type StoryUpdateContent struct {
