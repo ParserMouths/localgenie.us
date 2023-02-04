@@ -33,13 +33,15 @@ export default function CreateStore(props) {
     formData.append("about_vendor", aboutVendor);
 
     try {
+      console.log(authHeader());
       const res = await fetch("http://127.0.0.1:6969/stall/new", {
         method: "POST",
         body: formData,
-        headers: authHeader(),
+        headers: {
+          ...authHeader(),
+        },
       });
-
-      console.log(res.data);
+      history.push("/user/home");
     } catch (err) {
       console.log(err);
     }

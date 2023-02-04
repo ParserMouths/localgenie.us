@@ -32,8 +32,7 @@ export default function Login() {
       localStorage.setItem("userId", res.data.user_id);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("stallId", res.data.stall_id);
-
-      if (isVendor) history.push("/vendor/home");
+      if (isVendor) history.push("/createStore");
       else history.push("/user/home");
       // <Redirect to="user/login" />;
     } catch (err) {
