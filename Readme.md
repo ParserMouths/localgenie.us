@@ -1,4 +1,4 @@
-![]('../readme-img/pic.png')
+<img title="a title" alt="Alt text" src="./readme-img/pic.png">
 
 ## local-genie
 
