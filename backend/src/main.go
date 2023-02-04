@@ -16,12 +16,13 @@ func main() {
 	fmt.Println("htf!!")
 
 	config := utils.NewConfig()
-
 	db := database.NewDatabaseClient(globalContext, config)
 
-	redisClient, _ := database.NewRedisClient(globalContext, config)
-	redisClient.Ping(globalContext).Result()
+	_, err := database.NewRedisClient(globalContext, config)
 
+	if err != nil {
+		fmt.Println(err)
+	}
 	repositories := repository.Repositories{
 		UserRepo: repo_user.NewUserRepository(config, db),
 	}

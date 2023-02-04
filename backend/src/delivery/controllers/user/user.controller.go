@@ -5,23 +5,14 @@ import (
 	"fmt"
 	domain_user "htf/src/internal/domain/user"
 	"htf/src/utils"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
-	jwt "github.com/golang-jwt/jwt/v4"
 )
-
-var jwtKey = []byte("shlok-patel")
 
 type UserController interface {
 	UserTest(fiberHandler *fiber.Ctx) (err error)
 	UserSignIn(fiberHandler *fiber.Ctx) (err error)
 	UserSignUp(fiberHandler *fiber.Ctx) (err error)
-}
-
-type Claims struct {
-	Username string `json:"username"`
-	jwt.RegisteredClaims
 }
 
 type controller struct {
@@ -34,26 +25,20 @@ func (c *controller) UserTest(fiberHandler *fiber.Ctx) (err error) {
 }
 
 func (c *controller) UserSignIn(fiberHandler *fiber.Ctx) (err error) {
-	// get credentials
 	var loginUser domain_user.LoginUser
 	json.Unmarshal(fiberHandler.Body(), &loginUser)
 	fmt.Println(loginUser)
+
 	// check if password is same
-	expirationTime := time.Now().Add(5 * time.Minute)
-	claim := &Claims{
-		Username: "Shlok",
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(expirationTime),
-		},
+	ok, prob := c.user.VerifyUser(fiberHandler.Context(), loginUser)
+	if !ok {
+		return fiberHandler.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": prob,
+		})
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
+	tokenString, _ := c.user.GenerateAuthToken(fiberHandler.Context(), loginUser)
 
-	tokenString, err := token.SignedString(jwtKey)
-	if err != nil {
-		fiberHandler.SendString("Cannot")
-		return
-	}
 	return fiberHandler.JSON(fiber.Map{
 		"token": tokenString,
 	})

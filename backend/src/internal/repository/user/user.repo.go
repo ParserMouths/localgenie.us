@@ -30,3 +30,12 @@ func (repo *UserRepository) CreateUser(ctx context.Context, user domain_user.Use
 
 	return result.Error
 }
+
+func (repo *UserRepository) GetUserFromUsername(ctx context.Context, username string) domain_user.User {
+	var user domain_user.User
+	results := repo.db.Where("username = ?", username).First(&user)
+	if results.Error != nil {
+		return domain_user.User{}
+	}
+	return user
+}
