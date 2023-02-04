@@ -63,8 +63,8 @@ export default function Results(props) {
   const removeAttribution = (_) =>
     document.querySelector(".leaflet-bottom.leaflet-right").remove();
   const [currentMarker, setCurrentMarker] = useState({
-    Latitude: parseFloat(localStorage.getItem("latitude")),
-    Longitude: parseFloat(localStorage.getItem("longitude")),
+    latitude: parseFloat(localStorage.getItem("latitude")),
+    longitude: parseFloat(localStorage.getItem("longitude")),
   });
   const query = useQuery();
   let { searchQuery } = useParams();
@@ -91,13 +91,13 @@ export default function Results(props) {
   return (
     <>
       <MapContainer
-        center={[currentMarker.Latitude, currentMarker.Longitude]}
+        center={[currentMarker.latitude, currentMarker.longitude]}
         zoom={15}
         className="map-container"
         whenReady={removeAttribution}
       >
         <ChangeView
-          center={[currentMarker.Latitude, currentMarker.Longitude]}
+          center={[currentMarker.latitude, currentMarker.longitude]}
         />
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {loading ? (
@@ -106,16 +106,16 @@ export default function Results(props) {
           data.map((d, i) => (
             <CircleMarker
               key={i}
-              center={[d["Latitude"], d["Longitude"]]}
+              center={[d["latitude"], d["longitude"]]}
               radius={8}
               pathOptions={{ color: "red" }}
             >
-              <Popup>{d["StallName"]}</Popup>
+              <Popup>{d["stall_name"]}</Popup>
             </CircleMarker>
           ))
         )}
-        <Marker position={[currentMarker.Latitude, currentMarker.Longitude]}>
-          <Popup>{currentMarker["StallName"]}</Popup>
+        <Marker position={[currentMarker.latitude, currentMarker.longitude]}>
+          <Popup>{currentMarker["stall_name"]}</Popup>
         </Marker>
       </MapContainer>
       <ResultsList
@@ -126,7 +126,7 @@ export default function Results(props) {
       <TransitionGroup>
         <CSSTransition key={query} classNames="slide" timeout={300}>
           {/* sneaky workaround to prevent parent to re render */}
-          {query.get("StallID") ? (
+          {query.get("stall_id") ? (
             <VendorLanding className="vendor-landing-home" />
           ) : (
             <i />

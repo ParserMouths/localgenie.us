@@ -36,7 +36,7 @@ export default function VendorList(props) {
               className="vendor-card"
               data={d}
               setCurrentMarker={props.setCurrentMarker}
-              to={{ search: `StallID=${d["StallID"]}` }}
+              to={{ search: `stall_id=${d["stall_id"]}` }}
             />
           ))
         )}

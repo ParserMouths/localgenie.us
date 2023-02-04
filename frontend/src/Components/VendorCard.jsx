@@ -25,11 +25,11 @@ export default function VendorCard(props) {
           style={{ width: props.width }}
         >
           <img
-            src={props.data["Assets"]?.length > 0 && props.data["Assets"][0]}
+            src={props?.data?.["assets"]?.[0]}
           />
           <div className="title-description">
-            <h3> {props.data["StallName"]} </h3>
-            <p> {props.data["Offering"]} </p>
+            <h3> {props.data["stall_name"]} </h3>
+            <p> {props.data["offering"]} </p>
           </div>
         </div>
       </Link>

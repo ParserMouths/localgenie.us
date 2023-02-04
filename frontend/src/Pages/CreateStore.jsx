@@ -43,8 +43,9 @@ export default function CreateStore(props) {
         headers: {
           ...authHeader(),
         },
-      });
-      localStorage.setItem("stallId", res.data.stall_id);
+      }).then(r=>r.json());
+      console.log(res)
+      localStorage.setItem("stallId", res.stall_id);
       history.push("/user/home");
     } catch (err) {
       console.log(err);

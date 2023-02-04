@@ -31,7 +31,7 @@ function VendorLanding(props) {
 
   useEffect((_) => {
     (async () => {
-      const data = await getStore(query.get("StallID"));
+      const data = await getStore(query.get("stall_id"));
       console.log("data", data);
       if (data) setData(data);
       setLoading(false);
@@ -54,7 +54,7 @@ function VendorLanding(props) {
             infiniteLoop={true}
             autoPlay={true}
           >
-            {data?.Assets.map((img, i) => (
+            {data?.assets?.map((img, i) => (
               <img src={img} key={i} />
             ))}
           </Carousel>
@@ -63,7 +63,7 @@ function VendorLanding(props) {
           <hr />
           {!loading && (
             <>
-              <h2>{data["StallName"]}</h2>
+              <h2>{data["stall_name"]}</h2>
               <div className="btns">
                 <Mybutton outlined={true} className="btn-x">
                   {" "}
@@ -73,10 +73,10 @@ function VendorLanding(props) {
               </div>
 
               <h3>Offering</h3>
-              <p>{data["Offering"]}</p>
+              <p>{data["offering"]}</p>
 
               <h3>About Vendor</h3>
-              <p>{data["AboutVendor"]}</p>
+              <p>{data["aboutVendor"]}</p>
             </>
           )}
         </div>

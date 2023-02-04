@@ -45,7 +45,7 @@ export default function Home(props) {
       <TransitionGroup>
         <CSSTransition key={query} classNames="slide" timeout={300}>
           {/* sneaky workaround to prevent parent to re render */}
-          {query.get("StallID") ? (
+          {query.get("stall_id") ? (
             <VendorLanding className="vendor-landing-home" />
           ) : (
             <i />

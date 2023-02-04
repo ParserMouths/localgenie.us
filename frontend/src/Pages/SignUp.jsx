@@ -27,14 +27,15 @@ export default function SignUp(props) {
 
     try {
       const [latitude, longitude] = await userGetLocation();
+      console.log('latlong', latitude, longitude)
       const payload = {
         is_vendor: localStorage.getItem("isVendor"),
         username: username,
         first_name: firstName,
         last_name: lastName,
-        latitude: latitude,
-        longitude: longitude,
-        phone_no: number,
+        latitude: String(latitude),
+        longitude: String(longitude),
+        phone_no: String(number),
         email: email,
         password: password,
         subscription: localStorage.getItem("subscription"),

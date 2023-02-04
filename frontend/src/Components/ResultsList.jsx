@@ -14,7 +14,7 @@ export default function ResultsList(props) {
             className="vendor-card"
             data={d}
             animate={true}
-            to={{ search: `StallID=${d["StallID"]}` }}
+            to={{ search: `stall_id=${d["stall_id"]}` }}
             setCurrentMarker={props.setCurrentMarker}
           />
         ))}
