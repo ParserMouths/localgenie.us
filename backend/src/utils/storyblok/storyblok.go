@@ -205,7 +205,7 @@ func UpdateStory(config *utils.Config, storyId string, payload *domain_storyblok
 		return "", err
 	}
 
-	fmt.Println(fmt.Sprintf(updateStoryURL, config.SpaceID, storyId))
+	fmt.Println("Hookokoko", fmt.Sprintf(updateStoryURL, config.SpaceID, storyId))
 	req, err := http.NewRequest("PUT", fmt.Sprintf(updateStoryURL, config.SpaceID, storyId), bytes.NewBuffer(json_data))
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", config.StoryBlokOAuth)
@@ -228,7 +228,7 @@ func UpdateStory(config *utils.Config, storyId string, payload *domain_storyblok
 		return "", err
 	}
 
-	fmt.Println(string(r))
+	fmt.Println("olala", string(r))
 
 	if err != nil {
 		return "", err

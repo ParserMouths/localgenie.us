@@ -11,6 +11,8 @@ import (
 	"htf/src/utils"
 	notif "htf/src/utils/notification"
 	"htf/src/utils/storyblok"
+	"io"
+	"net/http"
 	"strconv"
 	"time"
 
@@ -98,21 +100,50 @@ func (handler *stallUsecase) UpdateStall(ctx context.Context, stallID string, re
 		return domain_stall.Stall{}, err
 	}
 
+	client := &http.Client{}
+	req, _ := http.NewRequest("GET", fmt.Sprintf("https://mapi.storyblok.com/v1/spaces/%s/stories/%s", handler.config.SpaceID, stall.StoryID), nil)
+	req.Header.Set("Authorization", handler.config.StoryBlokOAuth)
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Mauu", err)
+	}
+	defer res.Body.Close()
+	var currentStory domain_storyblok.StoryPayload
+	bodyByte, _ := io.ReadAll(res.Body)
+	err = json.Unmarshal(bodyByte, &currentStory)
+	if err != nil {
+		fmt.Println("mulu mulu", err)
+	}
 	intStoryID, _ := strconv.Atoi(stall.StoryID)
 	newStall := &domain_stall.Stall{
-		StallName:  stall.StallName,
-		IsOpen:     reqStall.IsOpen,
-		LastActive: timeStr,
-		Latitude:   reqStall.Latitude,
-		Longitude:  reqStall.Longitude,
+		StallID:     stall.StallID,
+		OwnerID:     stall.OwnerID,
+		StallName:   stall.StallName,
+		IsOpen:      reqStall.IsOpen,
+		CreatedAt:   stall.CreatedAt,
+		Rating:      stall.Rating,
+		LastActive:  timeStr,
+		Latitude:    reqStall.Latitude,
+		Longitude:   reqStall.Longitude,
+		Offerings:   stall.Offerings,
+		AboutVendor: stall.AboutVendor,
+		Licensed:    stall.Licensed,
+		StoryID:     stall.StoryID,
 	}
 
 	var latFloat, longFloat float64
 	newStoryContent := &domain_storyblok.StoryContent{
-		Component:  "test",
-		StallID:    stallID,
-		IsOpen:     newStall.IsOpen,
-		LastActive: newStall.LastActive,
+		Component:   "test",
+		Assets:      currentStory.Story.Content.Assets,
+		StallID:     currentStory.Story.Content.StallID,
+		OwnerID:     currentStory.Story.Content.OwnerID,
+		IsOpen:      newStall.IsOpen,
+		LastActive:  newStall.LastActive,
+		Rating:      currentStory.Story.Content.Rating,
+		Offering:    currentStory.Story.Content.Offering,
+		AboutVendor: currentStory.Story.Content.AboutVendor,
+		CreatedAt:   currentStory.Story.Content.CreatedAt,
+		StallName:   currentStory.Story.Content.StallName,
 	}
 
 	if reqStall.Latitude != "" && reqStall.Longitude != "" {
@@ -130,7 +161,7 @@ func (handler *stallUsecase) UpdateStall(ctx context.Context, stallID string, re
 		}
 	}
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("JHeereeer", err)
 		return domain_stall.Stall{}, err
 	}
 
@@ -144,7 +175,7 @@ func (handler *stallUsecase) UpdateStall(ctx context.Context, stallID string, re
 	}
 
 	_, err = storyblok.UpdateStory(handler.config, stall.StoryID, newStory)
-	fmt.Println(err)
+	fmt.Println("Heereeee", err)
 
 	handler.stallRepo.UpdateStall(ctx, stallID, *newStall)
 	// also manage creating stall in storyblok using management API
