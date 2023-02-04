@@ -79,7 +79,7 @@ func (handler *userUsecase) VerifyUser(ctx context.Context, loginUser domain_use
 func (handler *userUsecase) GenerateAuthToken(ctx context.Context, loginUser domain_user.LoginUser) (string, error) {
 	expirationTime := time.Now().Add(60 * time.Minute)
 	claim := &Claims{
-		Username: "Shlok",
+		Username: loginUser.Username,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},
