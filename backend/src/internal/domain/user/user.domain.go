@@ -23,8 +23,11 @@ type LoginUser struct {
 
 type Repository interface {
 	CreateUser(ctx context.Context, user User) error
+	GetUserFromUsername(ctx context.Context, username string) User
 }
 
 type UseCase interface {
 	CreateUser(ctx context.Context, userBody User) (User, error)
+	VerifyUser(ctx context.Context, loginUser LoginUser) (bool, string)
+	GenerateAuthToken(ctx context.Context, loginUser LoginUser) (string, error)
 }

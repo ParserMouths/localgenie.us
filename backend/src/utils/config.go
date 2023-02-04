@@ -2,6 +2,7 @@ package utils
 
 import (
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 )
@@ -9,8 +10,9 @@ import (
 type Config struct {
 	RedisClusterURL string
 	RedisTLSDomain  string
-	ServerPort      int32
+	ServerPort      string
 	PostgresURI     string
+	JwtSecret       string
 }
 
 func NewConfig() *Config {
@@ -21,10 +23,33 @@ func NewConfig() *Config {
 	}
 
 	config := &Config{
-		RedisClusterURL: "redis://localhost:6379",
+		RedisClusterURL: "redis://redis:6379",
 		RedisTLSDomain:  "",
-		ServerPort:      6969,
-		PostgresURI:     "postgresql://test:test@localhost/test",
+		ServerPort:      "6969",
+		PostgresURI:     "postgresql://test:test@postgres/test",
+		JwtSecret:       "",
+	}
+
+	envConfigVars := [...]string{
+		"SERVER_PORT",
+		"PG_DB_URI",
+		"REDIS_CLUSTER_HOST",
+		"JWT_SECRET",
+	}
+
+	for _, env := range envConfigVars {
+		if os.Getenv(env) != "" {
+			switch env {
+			case "SERVER_PORT":
+				config.ServerPort = os.Getenv(env)
+			case "PG_DB_URI":
+				config.PostgresURI = os.Getenv(env)
+			case "REDIS_CLUSTER_HOST":
+				config.RedisClusterURL = os.Getenv(env)
+			case "JWT_SECRET":
+				config.JwtSecret = os.Getenv(env)
+			}
+		}
 	}
 
 	return config
