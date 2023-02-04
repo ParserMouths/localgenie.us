@@ -19,11 +19,9 @@ type controller struct {
 	notification domain_notification.Usecase
 }
 
-const PublicKey = "test"
-
 func (c *controller) SendVapidKey(fiberHandler *fiber.Ctx) error {
 	return fiberHandler.JSON(fiber.Map{
-		"vapid_key": PublicKey,
+		"vapid_key": c.config.NotificationPublicKey,
 	})
 }
 

@@ -30,7 +30,7 @@ func (c *controller) UserSignIn(fiberHandler *fiber.Ctx) (err error) {
 	fmt.Println(loginUser)
 
 	// check if password is same
-	ok, prob := c.user.VerifyUser(fiberHandler.Context(), loginUser)
+	ok, prob, tknReturn := c.user.VerifyUser(fiberHandler.Context(), loginUser)
 	if !ok {
 		return fiberHandler.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"error": prob,
@@ -39,9 +39,8 @@ func (c *controller) UserSignIn(fiberHandler *fiber.Ctx) (err error) {
 
 	tokenString, _ := c.user.GenerateAuthToken(fiberHandler.Context(), loginUser)
 
-	return fiberHandler.JSON(fiber.Map{
-		"token": tokenString,
-	})
+	tknReturn.Token = tokenString
+	return fiberHandler.JSON(tknReturn)
 }
 
 func (c *controller) UserSignUp(fiberHandler *fiber.Ctx) (err error) {

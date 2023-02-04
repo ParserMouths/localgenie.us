@@ -34,32 +34,46 @@ func NewUserUsecase(config *utils.Config, db *gorm.DB, userRepo domain_user.Repo
 
 func (handler *userUsecase) CreateUser(ctx context.Context, reqUser domain_user.User) (domain_user.User, error) {
 	userID := uuid.New().String()
+	if reqUser.IsVendor == "1" {
+
+	}
 	newUser := &domain_user.User{
-		UserID:    userID,
-		Username:  reqUser.Username,
-		Firstname: reqUser.Firstname,
-		Lastname:  reqUser.Lastname,
-		IsVendor:  reqUser.IsVendor,
-		Location:  reqUser.Location,
-		Email:     reqUser.Email,
-		Password:  hashAndSalt(reqUser.Password),
+		UserID:       userID,
+		Username:     reqUser.Username,
+		Firstname:    reqUser.Firstname,
+		Lastname:     reqUser.Lastname,
+		IsVendor:     reqUser.IsVendor,
+		Latitude:     reqUser.Latitude,
+		Longitude:    reqUser.Longitude,
+		Email:        reqUser.Email,
+		Password:     hashAndSalt(reqUser.Password),
+		Subscription: reqUser.Subscription,
 	}
 	handler.userRepo.CreateUser(ctx, *newUser)
 	return *newUser, nil
 }
 
-func (handler *userUsecase) VerifyUser(ctx context.Context, loginUser domain_user.LoginUser) (bool, string) {
+func (handler *userUsecase) VerifyUser(ctx context.Context, loginUser domain_user.LoginUser) (bool, string, domain_user.TokenReturn) {
 	existingUser := handler.userRepo.GetUserFromUsername(ctx, loginUser.Username)
 	if existingUser.UserID == "" {
-		return false, "user not found"
+		return false, "user not found", domain_user.TokenReturn{}
 	}
 
 	pwdVerified := comparePassword(existingUser.Password, loginUser.Password)
 	if !pwdVerified {
-		return false, "password not matched"
+		return false, "password not matched", domain_user.TokenReturn{}
 	}
 
-	return true, ""
+	tknReturn := &domain_user.TokenReturn{
+		UserID: existingUser.UserID,
+	}
+
+	doStallIdExist := handler.userRepo.GetStallIdFromUserId(ctx, existingUser.UserID)
+	if doStallIdExist != "" {
+		tknReturn.StallID = doStallIdExist
+	}
+
+	return true, existingUser.UserID, *tknReturn
 }
 
 func (handler *userUsecase) GenerateAuthToken(ctx context.Context, loginUser domain_user.LoginUser) (string, error) {

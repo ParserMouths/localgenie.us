@@ -3,6 +3,7 @@ package repo_user
 import (
 	"context"
 	"fmt"
+	domain_stall "htf/src/internal/domain/stall"
 	domain_user "htf/src/internal/domain/user"
 	"htf/src/utils"
 
@@ -38,4 +39,13 @@ func (repo *UserRepository) GetUserFromUsername(ctx context.Context, username st
 		return domain_user.User{}
 	}
 	return user
+}
+
+func (repo *UserRepository) GetStallIdFromUserId(ctx context.Context, userID string) string {
+	var stall domain_stall.Stall
+	results := repo.db.Table("stalls").Where("owner_id = ?", userID).First(&stall)
+	if results.Error != nil {
+		return ""
+	}
+	return stall.StallID
 }
