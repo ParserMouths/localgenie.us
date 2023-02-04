@@ -1,0 +1,15 @@
+@import "../utils/variables";
+
+.vendor-list-wrapper {
+	display: flex;
+	flex-direction: column;
+	h4 {
+		color: $mygrey;
+		font-weight: 500;
+		margin-bottom: 0.25rem;
+	}
+	.vendor-card {
+		margin-bottom: 0.5rem;
+	}
+}
+

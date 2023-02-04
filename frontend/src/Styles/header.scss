@@ -1,0 +1,12 @@
+@import "../utils/variables";
+
+.header-wrapper{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background: white;
+	.locator {
+		margin: 0.5rem;
+		text-decoration: underline;
+	}
+}

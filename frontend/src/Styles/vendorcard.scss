@@ -1,0 +1,44 @@
+@import "../utils/variables";
+
+.vendor-wrapper {
+
+	background: white;
+    position: relative;
+    border-radius: 0.5rem;
+    height: 7.5rem;
+    //width: 90vw;
+    display: flex;
+	flex-direction: row;
+	box-shadow: inset 0px 0px 0px 2px #f0f0f0;
+	transition: all ease-in-out 0.25s;
+	//border: None; 
+
+	img {
+		height: 7.5rem;
+		width: 7.5rem;
+		object-fit: cover;
+		border-radius: 0.5rem 0 0 0.5rem;
+	}
+
+	.title-description{
+		margin: 0.75rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		h3 {
+			color: $primary;
+			line-height: 130%;
+		}
+		p {
+			color: $mygrey;
+			font-size: 0.75rem;
+		}
+	}
+
+	&.grow {
+		transform: scale(1.1);
+	}
+
+	&.shrink {
+		transform: scale(0.8)
+	}
+}

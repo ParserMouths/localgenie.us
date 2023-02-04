@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&display=swap");
+@import "../utils/variables";
+
+.navigation {
+	position: relative;
+    width: 210px;
+    height: 70px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+    scale: 0.8;
+	z-index: 1;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+}
+.navigation ul li {
+  position: relative;
+  list-style: none;
+  width: 70px;
+  height: 70px;
+  z-index: 1;
+}
+.navigation ul li a {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  color: #333;
+  font-weight: 500;
+}
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  line-height: 75px;
+  text-align: center;
+  transition: 0.25s;
+}
+.navigation ul li.active a .icon {
+  color: #fff;
+}
+.navigation ul li a .icon i {
+  font-size: 20px;
+}
+.navigation ul li a .title {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  transform: translate(-50%, 15%);
+  width: auto;
+  background: #fff;
+  padding: 5px 10px;
+  border-radius: 7px;
+  transition: 0.25s;
+  opacity: 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  visibility: hidden;
+}
+.navigation ul li:hover a .title {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 50%);
+}
+.navigation ul li a .title::before {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  bottom: -8px;
+  left: 48%;
+  transform: rotate(45deg) translateX(-50%);
+  border-radius: 2px;
+}
+.navigation ul .indicator {
+  position: absolute;
+  left: 0;
+  width: 70px;
+  height: 70px;
+  transition: all 0.25s;
+  color: $primary;
+}
+
+.navigation ul .indicator::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $primary;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  transition: 0.25s;
+}
+.navigation ul li:nth-child(1).active ~ .indicator {
+  transform: translateX(calc(70px * 0));
+}
+.navigation ul li:nth-child(2).active ~ .indicator {
+  transform: translateX(calc(70px * 1));
+}
+.navigation ul li:nth-child(3).active ~ .indicator {
+  transform: translateX(calc(70px * 2));
+}
+.navigation ul li:nth-child(4).active ~ .indicator {
+  transform: translateX(calc(70px * 3));
+}
+.navigation ul li:nth-child(5).active ~ .indicator {
+  transform: translateX(calc(70px * 4));
+}
+
+//.navigation ul li:nth-child(1).active ~ .indicator::before {
+  //background-color: crimson;
+//}
+//.navigation ul li:nth-child(2).active ~ .indicator::before {
+  //background-color: #3c40c6;
+//}
+//.navigation ul li:nth-child(3).active ~ .indicator::before {
+  //background-color: #05c46b;
+//}
+//.navigation ul li:nth-child(4).active ~ .indicator::before {
+  //background-color: #0fbcf9;
+//}
+//.navigation ul li:nth-child(5).active ~ .indicator::before {
+  //background-color: #ffa801;
+//}
+

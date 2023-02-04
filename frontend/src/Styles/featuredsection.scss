@@ -1,0 +1,21 @@
+@import "../utils/variables";
+
+.featured-wrapper {
+	display: block;
+	h4 {
+		color: $mygrey;
+		font-weight: 500;
+	}
+}
+
+.card-wrapper {
+	display: flex;
+	flex-direction: row;
+	overflow-x: auto;
+	.card {
+		margin: 0.25rem 0.5rem 0 0;
+	}
+	&::-webkit-scrollbar {
+		display: None;
+	}
+}
