@@ -36,7 +36,7 @@ export default function VendorHome(props) {
       const newUrl = window.prompt("Enter New Payment URL");
     } else console.log("regular");
   };
-  const [slider, setSlider] = useState(false);
+  const [slider, setSlider] = useState(true);
 
   // useEffect(() => {
 

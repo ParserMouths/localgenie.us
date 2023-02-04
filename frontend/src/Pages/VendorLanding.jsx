@@ -76,7 +76,7 @@ function VendorLanding(props) {
 
               <Tag
                 title={
-                  data?.["IsOpen"] === 1
+                  data?.["is_open"] === 1
                     ? "Open"
                     : "Last Active : " + data?.["LastActive"]?.split(" ")[0]
                 }
@@ -86,7 +86,7 @@ function VendorLanding(props) {
               <p>{data["offering"]}</p>
 
               <h3>About Vendor</h3>
-              <p>{data["aboutVendor"]}</p>
+              <p>{data["about_vendor"]}</p>
             </>
           )}
         </div>
