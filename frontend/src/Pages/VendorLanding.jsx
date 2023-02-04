@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -6,6 +5,7 @@ import "../Styles/vendorlanding.scss";
 import Mybutton from "../Components/Button.jsx";
 import { withRouter, useLocation } from "react-router-dom";
 import { getStore } from "../utils/storyblok.js";
+import Loader from "../Components/Loader";
 
 const dummyData = {
   imgs: [
@@ -41,6 +41,7 @@ function VendorLanding(props) {
 
   return (
     <div className={props.className}>
+      {loading && <Loader />}
       <div className="vendor-landing-page">
         <Mybutton className="back-btn" onClick={props.history.goBack}>
           <i className="far fa-arrow-left"></i> &nbsp; Back{" "}
@@ -60,9 +61,7 @@ function VendorLanding(props) {
         </div>
         <div className="vendor-content">
           <hr />
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
+          {!loading && (
             <>
               <h2>{data["StallName"]}</h2>
               <div className="btns">

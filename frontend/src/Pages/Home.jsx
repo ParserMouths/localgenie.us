@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Components/Header.jsx";
 import VendorList from "../Components/VendorList.jsx";
 import FeaturedSection from "../Components/FeaturedSection.jsx";
@@ -28,13 +28,18 @@ function useQuery() {
 
 export default function Home(props) {
   let { path, url } = useRouteMatch();
+  let [searchQuery, setSearchQuery] = useState("");
   let location = useLocation();
   let query = useQuery();
 
   return (
     <div className={props.className}>
       <Header className="header" />
-      <SearchBar className="search-bar" />
+      <SearchBar
+        className="search-bar"
+        setSearchQuery={setSearchQuery}
+        searchQuery={searchQuery}
+      />
       <FeaturedSection className="featured" />
       <VendorList className="vendor-list" title="Nearby Stalls" />
       <TransitionGroup>
