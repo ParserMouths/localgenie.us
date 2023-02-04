@@ -5,6 +5,7 @@ import axios from "../utils/axios/axios";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { CREATE_STALL_URL } from "../utils/constants.js";
 import authHeader from "../utils/axios/auth-header.js";
+import Loader from "../Components/Loader.jsx";
 
 export default function CreateStore(props) {
   // const { auth } = useAuth();
@@ -15,11 +16,13 @@ export default function CreateStore(props) {
   const [aboutVendor, setAboutVendor] = useState("");
   const [offerings, setOfferings] = useState("");
   const fileRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   let history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const files = fileRef.current;
     const formData = new FormData();
     for (const file of files.files) {
@@ -41,61 +44,68 @@ export default function CreateStore(props) {
           ...authHeader(),
         },
       });
+      localStorage.setItem("stallId", res.data.stall_id);
       history.push("/user/home");
     } catch (err) {
       console.log(err);
     }
+    setLoading(false);
   };
 
   return (
     <div className="">
-      <section className="form-wrapper">
-        <h1>Setup Shop</h1>
-        <form
-          onSubmit={handleSubmit}
-          className="form"
-          encType="multipart/form-data"
-        >
-          <div className="form-input">
-            <input
-              type="text"
-              id="stallName"
-              placeholder="StallName"
-              autoComplete="off"
-              onChange={(e) => setstallName(e.target.value)}
-              value={stallName}
-              required
-            />
+      {loading ? (
+        <Loader />
+      ) : (
+        <section className="form-wrapper">
+          <h1>Setup Shop</h1>
+          <form
+            onSubmit={handleSubmit}
+            className="form"
+            encType="multipart/form-data"
+          >
+            <div className="form-input">
+              <input
+                type="text"
+                id="stallName"
+                placeholder="StallName"
+                autoComplete="off"
+                onChange={(e) => setstallName(e.target.value)}
+                required
+              />
 
-            <textarea
-              id="aboutVendor"
-              placeholder="AboutVendor"
-              autoComplete="off"
-              onChange={(e) => setAboutVendor(e.target.value)}
-              required
-              rows="4"
-            >
-              {aboutVendor}
-            </textarea>
+              <textarea
+                id="aboutVendor"
+                placeholder="AboutVendor"
+                autoComplete="off"
+                onChange={(e) => setAboutVendor(e.target.value)}
+                required
+                rows="4"
+              />
 
-            <textarea
-              id="offerings"
-              placeholder="Offerings"
-              autoComplete="off"
-              onChange={(e) => setOfferings(e.target.value)}
-              rows="4"
-              required
-            >
-              {offerings}
-            </textarea>
+              <textarea
+                id="offerings"
+                placeholder="Offerings"
+                autoComplete="off"
+                onChange={(e) => setOfferings(e.target.value)}
+                rows="4"
+                required
+              />
 
-            <input type="file" id="Files" name="Files" multiple ref={fileRef} />
-          </div>
-          <MyButton style={{ width: "100vw", textAlign: "center" }}>
-            Create Stall
-          </MyButton>
-        </form>
-      </section>
+              <input
+                type="file"
+                id="Files"
+                name="Files"
+                multiple
+                ref={fileRef}
+              />
+            </div>
+            <MyButton style={{ width: "100vw", textAlign: "center" }}>
+              Create Stall
+            </MyButton>
+          </form>
+        </section>
+      )}
     </div>
   );
 }

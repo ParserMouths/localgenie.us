@@ -6,6 +6,9 @@ import { withRouter } from "react-router-dom";
 
 import "../Styles/vendorhome.scss";
 import SliderButton from "../Components/SliderButton.jsx";
+import axios from "../utils/axios/axios.js";
+import Loader from "../Components/Loader.jsx";
+import authHeader from "../utils/axios/auth-header.js";
 
 const dummyData = {
   imgs: [
@@ -24,7 +27,7 @@ const editHandler = (_) => {
 
 export default function VendorHome(props) {
   const [editing, setEditing] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const editHandler = (_) => setEditing(!editing);
 
   const paymentHandler = (_) => {
@@ -34,14 +37,32 @@ export default function VendorHome(props) {
   };
   const [slider, setSlider] = useState(false);
 
-  useEffect(() => {
-    //Api call.
-  }, [slider]);
+  // useEffect(() => {
+
+  // }, [slider]);
   const sliderHandler = () => {
     setSlider(!slider);
+    (async () => {
+      setLoading(true);
+      const res = await axios.post(
+        `/stall/update/${localStorage.getItem("stallId")}`,
+        {
+          is_open: slider ? 1 : 0,
+          latitude: localStorage.getItem("latitude"),
+          longitude: localStorage.getItem("longitude"),
+        },
+        {
+          headers: authHeader(),
+        }
+      );
+      setLoading(false);
+      if (res.status == 200) alert("Operation is successful!");
+      else alert("Error updating Info");
+    })();
   };
   return (
     <div className={props.className}>
+      {loading && <Loader />}
       <div className="vendor-home-page">
         <Mybutton className="edit-btn" onClick={editHandler}>
           {editing ? (

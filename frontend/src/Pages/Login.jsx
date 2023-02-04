@@ -15,21 +15,20 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   // const { auth, setAuth } = useAuth();
 
-  const isVendor = localStorage.getItem("isVendor");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const isVendor = localStorage.getItem("isVendor");
+    const stallId = localStorage.getItem("stallId");
+
     console.log(username, password);
     setLoading(true);
     try {
-      const res = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({
-          Username: username,
-          Email: email,
-          Password: password,
-        })
-      );
+      const res = await axios.post(LOGIN_URL, {
+        Username: username,
+        Email: email,
+        Password: password,
+      });
       console.log(res.data);
       localStorage.setItem("userId", res.data.user_id);
       localStorage.setItem("token", res.data.token);
@@ -40,8 +39,13 @@ export default function Login() {
       console.log(err);
     }
     setLoading(false);
-    if (isVendor) history.push("/createStore");
-    else history.push("/user/home");
+    if (isVendor === "true" && stallId?.trim() === "")
+      history.push("/createStore");
+    else {
+      console.log("iscv", isVendor);
+      if (isVendor === "true") history.push("/vendor/home");
+      else history.push("/user/home");
+    }
   };
   return (
     <div className="login">
