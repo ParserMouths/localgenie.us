@@ -52,11 +52,40 @@ user.
 - Docker and Docker compose for developement and deployment environments.
 <img width="1392" alt="ddd" src="https://user-images.githubusercontent.com/51414879/216795052-af2b1353-db6b-4a8a-9009-3bf779b5a708.png">
 
-
 ### Deployments🚀
 - Azure for the Virtual Machine
 - GoDaddy(Porkbun) for domain
 - Github for code collaboration. 
 - site: localgenie.us
 
+### Step to run the project.
 
+- Clone the project
+  ```sh
+  git clone https://github.com/ParserMouths/localgenie.us
+  ```
+
+- Change the directory
+  ```sh
+  cd localgenie.us
+  ```
+- start frontend
+  ```
+  cd frontend && npm install && npm start
+  ```
+- Start backend
+  ```
+  docker compose up
+  ```
+
+🤫 Shhhh.... .env file can be found [here](https://gist.github.com/madrix01/02dbc074c35ab1c65c05399d66f6f1ba)
+
+## Problem we faced while developing this project.
+Implementing StoryBlok SDK in goLang: As we have used storyblok to deliver the content to the users, we have to implement create, update and delete routes in the backend and read operation directly from the frontend. But Storyblok has sdk available only in javascript. Thus we have to implement storyblok sdk in the goLang. This includes implementing complex api’s like uploading vendor assets (images and other info) to CMS through backend. Being new to golang, that took lot of iterations to make it happen and was time consuming.
+
+Sending push notifications to users nearby to vendors: Sending notifications in PWA if itself complex as it involves storing subscription objects for each of the user into the database. For our application we have to specifically target a subset of users around the vendor.
+
+## Future Scope
+- Add simple analytics for vendor.
+- More security in app.
+- Multilingual Support 
