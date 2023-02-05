@@ -29,7 +29,10 @@ user.
 
 ### From vendors point of view 🌝
 
-- User 
+- Vendors get better engagement and hence better revenues.
+- Helps to improve vendors to make their business better from the users.
+- Can send notifications to the the users who marked stalls as favourite.
+- Can help identify areas of high revenue. i.e. the place where they can open their stall to earn more revenue.
 
 
 ## Tech Stack
