@@ -25,6 +25,8 @@ import Start from "./Pages/Start.jsx";
 import RequireAuth from "./Components/RequireAuth.jsx";
 import Profile from "./Pages/Profile.jsx";
 import Logout from "./Pages/Logout.jsx";
+import { BASE_URL } from "./utils/constants.js";
+
 // import { RequireAuth } from "./Components/RequireAuth.jsx";
 //<FeaturedCard img={require('./Assets/fruits.png')} title="Fruits" description="juicy asf" />
 //<VendorCard img={require('./Assets/vendor-1.png')} title="Gavin Belson's Sandwich" description="After working in tech, i finally decided to sell the sandwiches."/>
@@ -52,6 +54,71 @@ import Logout from "./Pages/Logout.jsx";
 function App() {
   let location = useLocation();
   console.log(location);
+
+  useEffect((_) => {
+    function urlBase64ToUint8Array(base64String) {
+      var padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+      var base64 = (base64String + padding)
+        .replace(/\-/g, "+")
+        .replace(/_/g, "/");
+
+      var rawData = window.atob(base64);
+      var outputArray = new Uint8Array(rawData.length);
+
+      for (var i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
+    }
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker
+          .register("serviceWorker.js")
+          .then(function (registration) {
+            // Use the PushManager to get the user's subscription to the push service.
+            return registration.pushManager
+              .getSubscription()
+              .then(async function (subscription) {
+                // If a subscription was found, return it.
+                if (subscription) {
+                  return subscription;
+                }
+
+                // Get the server's public key
+                const response = await fetch(`${BASE_URL}/notification/key`);
+                const result = await response.json();
+                console.log(result);
+                // Chrome doesn't accept the base64-encoded (string) vapidPublicKey yet
+                // urlBase64ToUint8Array() is defined in /tools.js
+                const convertedVapidKey = urlBase64ToUint8Array(
+                  result["vapid_key"]
+                );
+
+                // Otherwise, subscribe the user (userVisibleOnly allows to specify that we don't plan to
+                // send notifications that don't have a visible effect for the user).
+                return registration.pushManager.subscribe({
+                  userVisibleOnly: true,
+                  applicationServerKey: convertedVapidKey,
+                });
+              });
+          })
+          .then(function (subscription) {
+            localStorage.setItem("subscription", JSON.stringify(subscription));
+            // Send the subscription details to the server using the Fetch API.
+            //   fetch('http://localhost:6969/notification/register', {
+            // 	method: 'post',
+            // 	headers: {
+            // 	  'Content-type': 'application/json'
+            // 	},
+            // 	body: JSON.stringify({
+            // 	  subscription: subscription
+            // 	}),
+            //   });
+          });
+      });
+    }
+  }, []);
+
   const userId = localStorage.getItem("userId");
   return (
     <div className="App">

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { BASE_URL } from "../constants";
 
 export default axios.create({
   //Base URL of Backend.
-  baseURL: "http://127.0.0.1:6969",
+  baseURL: BASE_URL,
 });

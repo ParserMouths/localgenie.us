@@ -6,6 +6,7 @@ import { Link, Redirect, useHistory } from "react-router-dom";
 import { CREATE_STALL_URL } from "../utils/constants.js";
 import authHeader from "../utils/axios/auth-header.js";
 import Loader from "../Components/Loader.jsx";
+import { BASE_URL } from "../utils/constants.js";
 
 export default function CreateStore(props) {
   // const { auth } = useAuth();
@@ -37,14 +38,14 @@ export default function CreateStore(props) {
 
     try {
       console.log(authHeader());
-      const res = await fetch("http://127.0.0.1:6969/stall/new", {
+      const res = await fetch(`${BASE_URL}/stall/new`, {
         method: "POST",
         body: formData,
         headers: {
           ...authHeader(),
         },
-      }).then(r=>r.json());
-      console.log(res)
+      }).then((r) => r.json());
+      console.log(res);
       localStorage.setItem("stallId", res.stall_id);
       history.push("/user/home");
     } catch (err) {
