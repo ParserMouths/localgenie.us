@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import Mybutton from "../Components/Button.jsx";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link, useHistory } from "react-router-dom";
 
 import "../Styles/vendorhome.scss";
 import SliderButton from "../Components/SliderButton.jsx";
@@ -10,6 +10,7 @@ import axios from "../utils/axios/axios.js";
 import Loader from "../Components/Loader.jsx";
 import authHeader from "../utils/axios/auth-header.js";
 import Tag from "../Components/Tag.jsx";
+// import MyButton from "../Components/Button.jsx";
 
 const dummyData = {
   imgs: [
@@ -27,6 +28,7 @@ const editHandler = (_) => {
 };
 
 export default function VendorHome(props) {
+  let history = useHistory();
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const editHandler = (_) => setEditing(!editing);
@@ -61,6 +63,13 @@ export default function VendorHome(props) {
       else alert("Error updating Info");
     })();
   };
+
+  const logoutHandler = () => {
+    console.log("logging out");
+    localStorage.clear();
+    history.push("/");
+  };
+
   return (
     <div className={props.className}>
       {loading && <Loader />}
@@ -117,6 +126,9 @@ export default function VendorHome(props) {
           <p className={editing ? "edit" : ""} contentEditable={editing}>
             {dummyData["description"]}
           </p>
+        </div>
+        <div className="vendor-btn">
+          <Mybutton onClick={logoutHandler}>Logout</Mybutton>
         </div>
         {/* <Tags name="Not Active" /> */}
       </div>
