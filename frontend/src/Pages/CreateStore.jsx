@@ -37,14 +37,14 @@ export default function CreateStore(props) {
 
     try {
       console.log(authHeader());
-      const res = await fetch("http://127.0.0.1:6969/stall/new", {
+      const res = await fetch("http://20.193.242.191:6969/stall/new", {
         method: "POST",
         body: formData,
         headers: {
           ...authHeader(),
         },
-      }).then(r=>r.json());
-      console.log(res)
+      }).then((r) => r.json());
+      console.log(res);
       localStorage.setItem("stallId", res.stall_id);
       history.push("/user/home");
     } catch (err) {
