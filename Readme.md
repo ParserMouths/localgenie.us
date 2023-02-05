@@ -1,6 +1,6 @@
 <img title="a title" alt="Alt text" src="./readme-img/pic.png">
 
-## local-genie
+# local-genie
 
 Have you ever had a craving for pani-puri waale bhaiya who makes the best
 pani-puri around your town but you find that he is not near his spot.
@@ -18,18 +18,42 @@ better decision for your next place. Our idea can be extended to included all ki
 local stall owners who rely on the crowd and are dynamic according to the needs of the
 user.
 
+## Features
 
-### Tech Stack
+### From users point of view 🌚
 
-#### Frontend
-React for UI and components
-Storyblok for components related to the information of stalls
+- User get to track their favourite stalls, so their cravings doesn't get ignored.
+- Can get review from other users about stalls.
+- Get notified when their favorite stalls are in nearby area.
+- Get map with all the nearby stalls.
 
-#### Backend
-golang-fibre which acts as our web-server.
-postgresql to store user and stall details
-Azure for the Virtual Machine
-porkbun for domain
+### From vendors point of view 🌝
 
-site: localgenie.us
+- User 
+
+
+## Tech Stack
+
+- We have used **StoryBlok**'s headless CMS to deliver stories to our frontend.
+- It drastically reduced speeds for fetching the data than fetching it from our servers.
+- We have also used StoryBlok's asset store for storing and delivering all the images. 
+
+### Frontend🖥️ 
+- React for UI and components
+- Storyblok for components related to the information of stalls
+
+### Backend 🛠️
+- Backend is microservice created in **Go** created with [fiber](https://gofiber.io/) framework.
+- Architecture is based on Domain Driven Design, for scalability and cleaner repository design.
+- PostgresSQL is used as database since the models were relational.
+- Docker and Docker compose for developement and deployment environments.
+<img width="1392" alt="ddd" src="https://user-images.githubusercontent.com/51414879/216795052-af2b1353-db6b-4a8a-9009-3bf779b5a708.png">
+
+
+### Deployments🚀
+- Azure for the Virtual Machine
+- GoDaddy(Porkbun) for domain
+- Github for code collaboration. 
+- site: localgenie.us
+
 
